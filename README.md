@@ -64,4 +64,5 @@ O projeto visa implementar fisicamente um banco de dados baseado em um modelo co
 
 1. Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/tp2-banco-de-dados.git
+git clone https://github.com/otavioagf/TP2---Banco-de-Dados.git
+
