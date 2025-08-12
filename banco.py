@@ -53,3 +53,8 @@ def menu_pessoa():
             list_pessoa()
         elif op == 0:
             break
+
+
+def menu_inicial():
+    while True:
+        clear()
