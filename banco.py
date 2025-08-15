@@ -167,7 +167,7 @@ def gera_cartao():
 """---------Área Funcionário---------"""
 
 def login_func():
-    global func_logado
+    global func_logado, cargo_logado
     clear()
     print("---Login---")
     mat_func = input("Matrícula do funcionário: ")
@@ -179,7 +179,8 @@ def login_func():
                         """)
     if result:
         func_logado = mat_func
-        if func_logado['cargo'].lower()== 'gerente':
+        cargo_logado = result[0]['cargo']
+        if cargo_logado.lower() == 'gerente':
             menu_gerente()
         else:
             menu_func()
@@ -189,10 +190,10 @@ def login_func():
 
 
 def edita_func():
-    global func_logado
+    global func_logado, cargo_logado
     clear()
 
-    if func_logado['cargo'].lower()== 'gerente':
+    if cargo_logado.lower()== 'gerente':
         mat_func = input("Funcionário a ser editado: ")
         print("O que será editado:")
         print("[1] - Cargo")
@@ -201,7 +202,7 @@ def edita_func():
         print("[0] - Voltar")
         
         op = input("Opção: ")
-        if op == 1:
+        if op == "1":
             cargo_novo = input("Novo cargo: ")
             if db.manipulate(f"""
                 UPDATE Funcionario
@@ -212,7 +213,7 @@ def edita_func():
             else:
                 print("Erro ao alterar cargo.")
             back()
-        elif op == 2:
+        elif op == "2":
             sal_novo = input("Novo salário: ")
             if db.manipulate(f"""
                 UPDATE Funcionario
@@ -223,7 +224,7 @@ def edita_func():
             else:
                 print("Erro ao alterar salário.")
             back()
-        elif op == 3:
+        elif op == "3":
             ag_id = input("Nova agência: ")
             if db.manipulate(f"""
                 UPDATE Funcionario
@@ -234,7 +235,7 @@ def edita_func():
             else:
                 print("Erro ao alterar agência.")
             back()
-        elif op == 0:
+        elif op == "0":
             back()
     else:
         print("O que será editado:")
@@ -243,8 +244,25 @@ def edita_func():
 
         op = input("Opção: ")
 
-        if op == 1:
-            clear()
+        if op == "1":
+            end_novo = input("Novo endereço: ")
+            if db.manipulate(f"""
+                UPDATE Pessoa
+                SET Endereco = '{end_novo}'
+                WHERE id = (
+                    SELECT pessoa_id
+                    FROM funcionario
+                    WHERE matricula = '{func_logado}'
+                )
+                """):
+                print("Endereço alterado!")
+            else:
+                print("Erro ao alterar endereço")
+            back()
+        elif op == "0":
+            back()
+                
+            
 
 def atendimento():
     clear()
