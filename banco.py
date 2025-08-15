@@ -12,6 +12,26 @@ def clear():
 def back():
     input("\nAperte Enter para voltar")
 
+def login():
+    global conta_origem
+    clear()
+    print("---Login---")
+    num_conta = input("Número da conta: ")
+
+    result = db.consult(f"""
+                SELECT Numero
+                FROM Conta
+                WHERE Numero = '{num_conta}'
+                        """)
+    if result:
+        conta_origem = num_conta
+        print("Login realizado com sucesso!")
+        menu_conta()
+    else:
+        print("Conta inválida")
+    back()
+
+
 def add_conta():
     clear()
     CURRENT_DATE = date.today()
@@ -51,7 +71,7 @@ def add_conta():
     back()
 
 
-def list_titular():
+def list_titulares():
     clear()
     pessoas = db.consult("SELECT * FROM pessoa")
     if pessoas:
@@ -62,6 +82,7 @@ def list_titular():
     back()
 
 def realiza_transacao():
+    global conta_origem
     clear()
     CURRENT_DATE = date.today()
     print("---Transação---")
@@ -69,7 +90,6 @@ def realiza_transacao():
     valor = float(input("Valor: "))
 
     if tipo == "transferencia":
-        conta_origem = input("Conta de origem: ")
         conta_destino = input("Conta de destino: ")
 
         if db.manipulate(f"""
@@ -93,7 +113,7 @@ def realiza_transacao():
         else:
             print("Erro ao debitar da conta de origem.")
     elif tipo == 'deposito':
-        conta_destino = input("Conta de destino: ")
+        conta_destino = conta_origem
 
         if db.manipulate(f"""
             UPDATE Conta
@@ -102,13 +122,12 @@ def realiza_transacao():
                          """):
             db.manipulate(f"""
                 INSERT INTO Transacao (Data, Valor, Tipo, Descricao, Conta_Origem_Numero, Conta_Destino_Numero)
-                VALUES('{CURRENT_DATE}', {valor}, 'deposito', 'Depósito Realizado', {conta_destino}, {conta_destino})
+                VALUES('{CURRENT_DATE}', {valor}, 'deposito', 'Depósito Realizado', {conta_origem}, {conta_destino})
                 """)
             print("Depósito realizado!")
         else:
             print("Erro ao depositar.")
     elif tipo == 'saque':
-        conta_origem = input("Conta de origem: ")
 
         if db.manipulate(f"""
             UPDATE Conta
@@ -124,6 +143,22 @@ def realiza_transacao():
             print("Erro ao realizar saque.")
     else:
         print("Transação inválida.")
+    back()
+
+def gera_cartao():
+    global conta_origem
+    clear()
+    print("---Cartões---")
+
+    tipo_cartao = input("Tipo cartão (debito/credito)")
+
+    if db.manipulate(f"""
+        INSERT INTO Cartao(conta_numero, tipo, validade, bandeira)
+        VALUES({conta_origem}, '{tipo_cartao}', '03/2030', 'VISA' )            
+                     """):
+        print("Cartão Gerado")
+    else:
+        print("Erro ao gerar cartão.")
     back()
         
 
@@ -150,17 +185,17 @@ def atendimento():
 def menu_conta():
     while True:
         clear()
-        print("---Menu Pessoas---")
-        print("[1] - Adicionar")
-        print("[2] - Listar")
+        print("---Menu Conta---")
+        print("[1] - Transferência")
+        print("[2] - Gerar Cartão")
         print("[0] - Sair")
 
         op = input("Opção: ")
 
         if op == "1" :
-            add_conta()
+            realiza_transacao()
         elif op == "2":
-            list_titular()
+            gera_cartao()
         elif op == "0":
             break
 
@@ -182,13 +217,16 @@ def menu_inicial():
     while True:
         clear()
         print("---Sistema Bancário---")
-        print("[1] - Menu Contas")
+        print("[1] - Login")
+        print("[2] - Cadastrar")
         print("[0] - Sair")
 
         op = input("Opção: ")
 
         if op == "1" :
-            menu_conta()
+            login()
+        elif op == '2':
+            add_conta()
         elif op == "0":
             print("Fechando sistema")
             break
