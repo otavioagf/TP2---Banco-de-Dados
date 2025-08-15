@@ -12,6 +12,8 @@ def clear():
 def back():
     input("\nAperte Enter para voltar")
 
+"""---------Área Cliente---------"""
+
 def login():
     global conta_origem
     clear()
@@ -162,6 +164,88 @@ def gera_cartao():
     back()
         
 
+"""---------Área Funcionário---------"""
+
+def login_func():
+    global func_logado
+    clear()
+    print("---Login---")
+    mat_func = input("Matrícula do funcionário: ")
+
+    result = db.consult(f"""
+                SELECT Matricula
+                FROM Funcionario
+                WHERE Matricula = '{mat_func}'
+                        """)
+    if result:
+        func_logado = mat_func
+        if func_logado['cargo'].lower()== 'gerente':
+            menu_gerente()
+        else:
+            menu_func()
+    else:
+        print("Conta inválida")
+    back()
+
+
+def edita_func():
+    global func_logado
+    clear()
+
+    if func_logado['cargo'].lower()== 'gerente':
+        mat_func = input("Funcionário a ser editado: ")
+        print("O que será editado:")
+        print("[1] - Cargo")
+        print("[2] - Salário")
+        print("[3] - Agência")
+        print("[0] - Voltar")
+        
+        op = input("Opção: ")
+        if op == 1:
+            cargo_novo = input("Novo cargo: ")
+            if db.manipulate(f"""
+                UPDATE Funcionario
+                SET Cargo = '{cargo_novo}'
+                WHERE matricula = {mat_func}
+                             """):
+                print("Cargo alterado!")
+            else:
+                print("Erro ao alterar cargo.")
+            back()
+        elif op == 2:
+            sal_novo = input("Novo salário: ")
+            if db.manipulate(f"""
+                UPDATE Funcionario
+                SET Salario = {sal_novo}
+                WHERE matricula = {mat_func}
+                             """):
+                print("Salário alterado!")
+            else:
+                print("Erro ao alterar salário.")
+            back()
+        elif op == 3:
+            ag_id = input("Nova agência: ")
+            if db.manipulate(f"""
+                UPDATE Funcionario
+                SET Agencia_Id = {ag_id}
+                WHERE matricula = {mat_func}
+                             """):
+                print("Agência alterada!")
+            else:
+                print("Erro ao alterar agência.")
+            back()
+        elif op == 0:
+            back()
+    else:
+        print("O que será editado:")
+        print("[1] - Endereço")
+        print("[0] - Voltar")
+
+        op = input("Opção: ")
+
+        if op == 1:
+            clear()
+
 def atendimento():
     clear()
     print("---Realizar Atendimento---")
@@ -212,6 +296,11 @@ def menu_func():
             atendimento()
         elif op == "0":
             break
+
+def menu_gerente():
+    while True:
+        clear()
+        print("---Área Gerente---")
 
 def menu_inicial():
     while True:
