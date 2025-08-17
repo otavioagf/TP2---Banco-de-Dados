@@ -173,7 +173,7 @@ def login_func():
     mat_func = input("Matrícula do funcionário: ")
 
     result = db.consult(f"""
-                SELECT Matricula
+                SELECT Matricula, cargo
                 FROM Funcionario
                 WHERE Matricula = '{mat_func}'
                         """)
@@ -306,12 +306,15 @@ def menu_func():
         clear()
         print("---Área Funcionários---")
         print("[1] - Atendimento")
+        print("[2] - Editar informações pessoais")
         print("[0] - Sair")
 
         op = input("Opção: ")
 
         if op == "1" :
             atendimento()
+        elif op == "2":
+            edita_func()
         elif op == "0":
             break
 
@@ -319,21 +322,47 @@ def menu_gerente():
     while True:
         clear()
         print("---Área Gerente---")
+        print("[1] - Editar um funcionário")
+        print("[0] - Sair")
+        op = input("Opção: ")
 
-def menu_inicial():
+        if op == "1" :
+            edita_func()
+        elif op == "0":
+            print("Fechando sistema")
+            break
+
+def menu_login():
     while True:
         clear()
-        print("---Sistema Bancário---")
-        print("[1] - Login")
-        print("[2] - Cadastrar")
+        print("---Login---")
+        print("[1] - Cliente")
+        print("[2] - Cadastrar como cliente")
+        print("[3] - Funcionário")
         print("[0] - Sair")
 
         op = input("Opção: ")
 
         if op == "1" :
             login()
-        elif op == '2':
+        elif op == "2":
             add_conta()
+        elif op == "3":
+            login_func()
+        elif op == "0":
+            break
+
+def menu_inicial():
+    while True:
+        clear()
+        print("---Sistema Bancário---")
+        print("[1] - Login")
+        print("[0] - Sair")
+
+        op = input("Opção: ")
+
+        if op == "1" :
+            menu_login()
         elif op == "0":
             print("Fechando sistema")
             break
