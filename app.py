@@ -27,3 +27,32 @@ def cliente_login():
         else:
             return render_template("login.html", error = "Conta inválida")
     return render_template("login.html")
+
+@app.route("/menu_conta")
+def menu_conta():
+    if "conta_origem" not in session:
+        return redirect(url_for("cliente_login"))
+    conta = session["conta_origem"]
+    return render_template("menu_conta.html", conta = conta)
+
+@app.route("/cliente/cadastro", methods = ["GET", "POST"])
+def cadastra_cliente():
+    if request.method == "POST":
+        CURRENT_DATE = date.today()
+        nome = request.form["nome"].strip()
+        cpf = request.form["cpf"].strip()
+        data_nasc = request.form["data_nasc"].strip()
+        endereco = request.form["endereco"].strip()
+        tipo_conta = request.form["tipo_conta"].strip()
+
+        try1 = db.manipulate(
+                "INSERT INTO Conta(Tipo, Saldo, DataAbertura, Agencia_Id) VALUES(%s, %s, %s, %s)",
+                (tipo_conta, 0, CURRENT_DATE, 1)
+        )
+        if not try1:
+            return render_template("cadastra_cliente.html")
+        
+        row = db.consult("SELECT currval(pg_get_serial_sequence('Pessoa','id'))")
+        pessoa_id = row[0][0]
+
+
