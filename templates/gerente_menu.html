@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Área Gerente</h2>
+<div class="options-card">
+  <p>
+  <a href="{{ url_for('gerente_editar_func') }}">Editar Funcionário</a><br>
+  <a href="{{ url_for('gerente_add_func') }}">Adicionar Funcionário</a><br>
+  <a href="{{ url_for('lista_func') }}">Listar Funcionários</a><br>
+  <a href="{{ url_for('func_logout') }}">Sair</a>
+</p>
+</div>
+{% endblock %}

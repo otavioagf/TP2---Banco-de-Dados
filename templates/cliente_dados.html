@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Dados do Cliente</h2>
+
+<div style="display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+  <section>
+    <h3>Dados Pessoais</h3>
+    <ul style="list-style:none; padding:0; margin:0;">
+      <li><strong>Nome:</strong> {{ dados.nome }}</li>
+      <li><strong>CPF:</strong> {{ dados.cpf }}</li>
+      <li><strong>Endereço:</strong> {{ dados.endereco }}</li>
+      <li><strong>Data de Nascimento:</strong> {{ dados.data_nascimento }}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3>Conta</h3>
+    <ul style="list-style:none; padding:0; margin:0;">
+      <li><strong>Número da Conta:</strong> {{ dados.numero_conta }}</li>
+      <li><strong>Saldo:</strong> R$ {{ dados.saldo }}</li>
+    </ul>
+  </section>
+</div>
+
+<br>
+<a href="{{ url_for('menu_conta') }}" class="cta-button">Voltar</a>
+{% endblock %}

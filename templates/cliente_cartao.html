@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Gerar Cartão</h2>
+<form method="post">
+  <label>Tipo (debito/credito):</label><br>
+  <input type= "text" name="tipo" required>
+  <button type="submit">Gerar</button>
+</form>
+<p><a href="{{ url_for('menu_conta') }}" class="cta-button">Voltar</a></p>
+{% endblock %}

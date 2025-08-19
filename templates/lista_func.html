@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Funcionários da Agência</h2>
+<ul>
+  {% for matricula, nome in funcs %}
+    <li>{{ matricula }} - {{ nome }}</li>
+  {% endfor %}
+</ul>
+<p><a href="{{ url_for('gerente_menu') }}" class="cta-button">Voltar</a></p>
+{% endblock %}

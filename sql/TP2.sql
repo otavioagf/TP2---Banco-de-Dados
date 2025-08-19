@@ -62,7 +62,7 @@ CREATE TABLE Cliente (
 -- Tabela Contas Bancárias.
 -- Cada conta pertence a uma agência. [cite: 33, 123]
 CREATE TABLE Conta (
-    Numero INT PRIMARY KEY,
+    Numero INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     Tipo VARCHAR(20) NOT NULL CHECK (Tipo IN ('Corrente', 'Poupança')),
     Saldo DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
     DataAbertura DATE NOT NULL,
@@ -83,7 +83,7 @@ CREATE TABLE Titularidade_Conta (
 -- Tabela para Cartões (Entidade Fraca). [cite: 42, 128]
 -- A existência de um cartão depende da existência de uma conta.
 CREATE TABLE Cartao (
-    Numero VARCHAR(16) NOT NULL,
+    Numero BIGINT GENERATED ALWAYS AS IDENTITY,
     Conta_Numero INT NOT NULL, -- Chave estrangeira para a entidade "dona"
     Tipo VARCHAR(20) NOT NULL, -- Débito ou Crédito [cite: 129]
     Validade VARCHAR(7) NOT NULL, -- Formato MM/AAAA
