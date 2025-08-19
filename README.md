@@ -29,6 +29,7 @@ O projeto visa implementar fisicamente um banco de dados baseado em um modelo co
 
 ## 📁 Estrutura do repositório
 📦 TP2 - Banco de Dados
+```plaintext
 ├── sql/
 │ ├── esquema_fisico.sql # Comandos DDL para criação do banco
 │ ├── inserts_teste.sql # Dados fictícios para testes
@@ -38,6 +39,7 @@ O projeto visa implementar fisicamente um banco de dados baseado em um modelo co
 ├── apresentacao/
 │ └── slides_apresentacao.pptx # Slides para apresentação final
 └── README.md # Descrição geral do projeto
+```
 
 ---
 
