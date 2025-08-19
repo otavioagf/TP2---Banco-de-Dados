@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu de Login - BankInfo</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+        .menu {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+            text-align: center;
+            color: #fff;
+            position: relative;
+            z-index: 2;
+        }
+        .menu h2 {
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+        }
+        .menu a {
+            display: block;
+            margin: 15px 0;
+            padding: 15px 0;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: #fff;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: 0.2s;
+        }
+        .menu a:hover {
+            background: linear-gradient(45deg, #ee5a24, #ff6b6b);
+        }
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float-random 20s infinite linear;
+        }
+        @keyframes float-random {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-circle" style="left: 10%; width: 60px; height: 60px; animation-delay: -2s;"></div>
+        <div class="floating-circle" style="left: 20%; width: 40px; height: 40px; animation-delay: -4s;"></div>
+        <div class="floating-circle" style="left: 30%; width: 80px; height: 80px; animation-delay: -6s;"></div>
+        <div class="floating-circle" style="left: 40%; width: 50px; height: 50px; animation-delay: -8s;"></div>
+        <div class="floating-circle" style="left: 60%; width: 70px; height: 70px; animation-delay: -10s;"></div>
+        <div class="floating-circle" style="left: 70%; width: 30px; height: 30px; animation-delay: -12s;"></div>
+        <div class="floating-circle" style="left: 80%; width: 90px; height: 90px; animation-delay: -14s;"></div>
+        <div class="floating-circle" style="left: 90%; width: 45px; height: 45px; animation-delay: -16s;"></div>
+    </div>
+    <div class="menu">
+        <h2>Escolha o tipo de acesso</h2>
+        <a href="/cliente/login">Login Cliente</a>
+        <a href="/cliente/cadastro">Cadastrar Cliente</a>
+        <a href="#">Login Funcionário</a>
+        <a href="/">Voltar</a>
+    </div>
+</body>
+</html>
