@@ -1,3 +1,6 @@
+#Era o arquivo principal, mas depois virou o outro por causa do frontend, então pode ser ignorado esse
+
+
 from Conection import Connect
 import os
 from datetime import date
