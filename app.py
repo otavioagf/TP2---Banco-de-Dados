@@ -50,6 +50,7 @@ def cadastra_cliente():
         data_nasc = request.form["data_nasc"].strip()
         endereco = request.form["endereco"].strip()
         tipo_conta = request.form["tipo_conta"].strip()
+        telefone_pessoa = request.form["telefone_pessoa"].strip()
 
         try1 = db.manipulate(
                 "INSERT INTO Conta(Tipo, Saldo, DataAbertura, Agencia_Id) VALUES(%s, %s, %s, %s)",
@@ -87,8 +88,16 @@ def cadastra_cliente():
         if not try4:
             flash("Erro ao criar Cliente.", "error")
             return render_template("cadastra_cliente.html")
+        
+        try5 = db.manipulate(
+            "INSERT INTO  TelefonePessoa(Pessoa_id, Telefone) VALUES (%s, %s)",
+            (pessoa_id, telefone_pessoa)
+            )
+        if not try5:
+            flash("Erro ao criar Telefone.", "error")
+            return render_template("cadastra_cliente.html")
 
-        flash(f"Conta criada com sucesso!", "success")
+        flash(f"Conta criada com sucesso! Número: {conta_numero}", "success")
         return redirect(url_for("cliente_login"))
     return render_template("cadastra_cliente.html")
 
@@ -99,10 +108,11 @@ def cliente_dados():
     conta = session["conta_origem"]
 
     row = db.consult("""
-            SELECT p.nome, p.cpf, p.endereco, p.datanascimento, c.numero, c.saldo
+            SELECT p.nome, p.cpf, p.endereco, p.datanascimento, c.numero, c.saldo, t.telefone
                      FROM conta c
                      JOIN titularidade_conta tc ON c.numero = tc.conta_numero
                      JOIN pessoa p ON tc.cliente_pessoa_id = p.id
+                     LEFT JOIN telefonepessoa t ON p.id = t.pessoa_id
                      WHERE c.numero = %s
                      """, (conta,))
     
@@ -116,6 +126,7 @@ def cliente_dados():
         "data_nascimento": row[0][3],
         "numero_conta": row[0][4],
         "saldo": row[0][5],
+        "telefone": row[0][6],
     }
     return render_template("cliente_dados.html", dados = dados)
 
@@ -132,6 +143,15 @@ def cliente_transacao():
 
         if tipo == "transferencia":
             conta_destino = request.form["conta_destino"].strip()
+
+            saldo_origem = db.consult(
+                "SELECT Saldo FROM Conta WHERE Numero = %s", (conta_origem,)
+            )
+
+            if not saldo_origem or saldo_origem[0][0] < valor:
+                flash("Saldo insuficiente.", "error")
+                return render_template("cliente_transacao.html")
+
 
             ok_debita = db.manipulate(
                 "UPDATE Conta SET Saldo = Saldo - %s WHERE Numero = %s",
