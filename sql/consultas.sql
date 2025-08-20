@@ -1,4 +1,3 @@
-
 SELECT Nome, Idade FROM vw_cliente_idade ORDER BY Idade DESC;
 
 SELECT 

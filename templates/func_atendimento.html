@@ -3,9 +3,9 @@
 <h2>Registrar Atendimento</h2>
 <form method="post">
   <label>ID do Cliente (Pessoa_ID do Cliente):</label><br>
-  <input name="cliente_id" required><br>
+  <input type = "text" name="cliente_id" required><br>
   <label>Descrição:</label><br>
-  <textarea name="descricao" required></textarea><br><br>
+  <textarea type = "text" name="descricao" required></textarea><br><br>
   <button type="submit">Salvar</button>
 </form>
 <p><a href="{{ url_for('func_menu') }}" class="cta-button">Voltar</a></p>
