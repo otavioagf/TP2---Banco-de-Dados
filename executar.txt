@@ -7,3 +7,9 @@ utilize o arquivo TP2.sql para criar o banco
 utilize o arquivo insert.sql para popular o banco
 
 para executar a aplicação basta executar o arquivo app.py: python app.py
+
+caso algum arquivo no .zip dê erro, segue comando para clonar repositório:
+git clone https://github.com/otavioagf/TP2---Banco-de-Dados.git
+
+ou apenas link do github:
+https://github.com/otavioagf/TP2---Banco-de-Dados
