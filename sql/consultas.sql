@@ -69,3 +69,24 @@ JOIN Conta c ON t.Conta_Origem_Numero = c.Numero OR t.Conta_Destino_Numero = c.N
 JOIN Titularidade_Conta tc ON c.Numero = tc.Conta_Numero
 JOIN Pessoa p ON tc.Cliente_Pessoa_ID = p.ID
 WHERE p.Nome = 'Ana Clara';
+
+SELECT
+    p.Nome, f.Cargo
+    FROM Funcionario f
+    JOIN Pessoa p ON f.Pessoa_ID = p.ID
+    WHERE f.Pessoa_ID NOT IN (SELECT Gerente_ID FROM Agencia WHERE Gerente_ID IS NOT NULL);
+
+
+SELECT p.Nome AS Funcionario, COUNT(*) AS Qtd_Atendimentos
+FROM Funcionario_Atende_Cliente fac
+JOIN Pessoa p ON fac.Funcionario_Pessoa_ID = p.ID
+GROUP BY p.Nome
+ORDER BY Qtd_Atendimentos DESC;
+
+SELECT ag.Nome, COUNT(DISTINCT tc.Cliente_Pessoa_ID) AS Qtd_Clientes
+FROM Agencia ag
+JOIN Conta c ON ag.ID = c.Agencia_ID
+JOIN Titularidade_Conta tc ON c.Numero = tc.Conta_Numero
+GROUP BY ag.Nome
+ORDER BY Qtd_Clientes DESC;
+

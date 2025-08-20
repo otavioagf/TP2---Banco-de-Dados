@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="alert alert-success">
+    Conta criada com sucesso! Número da conta: {{ conta_numero }}
+</div>
+<meta http-equiv="refresh" content="3;url={{ url_for('cliente_login') }}">
+
+{% endblock %}

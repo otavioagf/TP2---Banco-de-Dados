@@ -98,7 +98,7 @@ def cadastra_cliente():
             return render_template("cadastra_cliente.html")
 
         flash(f"Conta criada com sucesso! Número: {conta_numero}", "success")
-        return redirect(url_for("cliente_login"))
+        return render_template("success.html", conta_numero = conta_numero)
     return render_template("cadastra_cliente.html")
 
 @app.route("/cliente/dados", methods=["GET"])
