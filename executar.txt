@@ -1,0 +1,9 @@
+instale python e o postgreeSQL
+instale no terminal os pacotes para conseguir executar o programa:
+pip install psycopg2 ou p install psycopg2
+pip install flask ou p install flask
+crie o banco de dados "banco" com usuario = "postgres", senha = "1234". (caso necessário confira se port = 5432, provavelmente não necessário)
+utilize o arquivo TP2.sql para criar o banco
+utilize o arquivo insert.sql para popular o banco
+
+para executar a aplicação basta executar o arquivo app.py: python app.py
